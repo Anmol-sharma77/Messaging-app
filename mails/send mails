@@ -1,0 +1,22 @@
+const Mailjet = require('node-mailjet');
+const mjet=new Mailjet({
+  apiKey: "5ec5da8012324c9a5e206e997db89959",
+  apiSecret: "fccd8b33bc24e4efa1de1395e27fc47c"
+}); 
+  module.exports.sendmail=async function(email,body)
+  {
+    return await mjet.post('send', { version: 'v3.1' }).request({
+        Messages: [
+          {
+            From: {
+              Email: "jatin.213029@maimt.com",
+              Name: 'Anmol Sharma',
+            },
+            To:email,
+            Subject: 'Verification',
+            TextPart: 'Greetings from Mailjet!',
+            HTMLPart:body,
+          },
+        ],
+      });
+  }

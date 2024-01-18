@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html> 
+    <nav> 
+        <h1>Groupify</h1>
+        <button id="back" class="cart" type="submit">Back</button>
+      </nav>
+    <head>
+        <style>
+          nav {
+    background-color:rgb(57, 56, 56);
+    border-bottom: 1px solid #ccc;
+    overflow: hidden;
+    height: 120px;
+  }
+  nav a {
+    display: block;
+    float: left;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  nav a:hover {
+    background-color: #ddd;
+  }
+  .cart{
+    width: 10%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1cded8;
+    color:white;
+    font-size: 16px;
+    float: right;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  h1{
+    text-align:center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+  }
+  .product-container {
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3498db, #e74c3c);
+    color: white;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 200px;
+    display: block;
+    flex-wrap: wrap;
+    margin-left: 40px;
+    margin-top: 10px;
+}
+img{
+    width:150px;
+    height:150px;
+    background-color: #333;
+    border-radius: 15px;
+    box-shadow:0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.btn{
+    width:80px;
+    height: 30px;
+    border-radius: 5px;
+    background-color:rgb(34, 36, 37);
+    margin-left: 10px;
+    color: white;
+}
+.btn3{
+    width:80px;
+    height: 30px;
+    border-radius: 5px;
+    background-color:rgb(34, 36, 37);
+    color: white;
+    margin-top: 5px;
+}
+h2{
+    float: left;
+    width: 100%;
+}
+.view{
+    width:90px;
+    height: 30px;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color:steelblue;
+    color: white;
+}
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+}
+.popup-content {
+  background-color:rgba(201, 198, 198, 0.593);
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  color: black
+}
+.close-button:hover {
+  color: #e74c3c;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.title {
+  font-size: 48px;
+  color: #333;
+  margin-bottom: 20px;
+  margin-top: 100px;
+}
+
+.subtitle {
+  font-size: 24px;
+  color: #777;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+        </style>
+        <title>Groupify</title>
+    </head>
+    <body style="width: 100%; background-color:rgba(201, 198, 198, 0.593);">
+        <div style="display:flex; flex-wrap: wrap;" id="div1">
+    </div> 
+    <div class="container" style="display: none;"id="oops">
+      <h1 class="title">Oops!!</h1>
+      <h2 class="subtitle">No request </h2>
+    </div> 
+    </body>
+    <script src="/request.js"></script>
+</html>

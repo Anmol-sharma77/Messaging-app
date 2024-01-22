@@ -10,11 +10,22 @@ const queryAsync = (sql) => {
       });
     });
   };
-
+  async function getuser(request,response)
+  {
+    try {
+    let username=await queryAsync(`select username from users where id=${request.session.userid}`);
+    username=username[0];
+    response.status(200);
+    response.json({name:username,id:request.session.userid});
+    } catch (error) {
+      console.log(error);
+      response.status(400).send();
+    }
+  }
   async function getmessage(request,response){
     try {
       console.log(request.query.groupid);
-      const data=await queryAsync(`select u.username,m.content,m.create_time from messages as m,users as u where m.sender=u.id and groupid=${request.query.groupid}`);
+      const data=await queryAsync(`select u.id,u.username,m.content,m.create_time from messages as m,users as u where m.sender=u.id and groupid=${request.query.groupid}`);
       response.status(200).json(data);
     } catch (error) {
       console.log(error);
@@ -117,5 +128,6 @@ function getlogin(request, response) {
           getallreq,
           groupreq,
           getlogout,
-          getmessage
+          getmessage,
+          getuser
         }

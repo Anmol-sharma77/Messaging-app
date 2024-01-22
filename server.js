@@ -94,6 +94,8 @@ app.get("/signup",getroutes.getsignup);
 
 app.get("/logout",getroutes.getlogout);
 
+app.get("/getuser",getroutes.getuser);
+
 // app.get("/cancelorder",getroutes.cancelorder);
 
 // app.get("/cancelorders",getroutes.cancelorders);

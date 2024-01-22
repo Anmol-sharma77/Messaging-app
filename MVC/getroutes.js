@@ -22,6 +22,19 @@ const queryAsync = (sql) => {
       response.status(400).send();
     }
   }
+  function getdash(request,response)
+  {
+    if (request.session.login) {
+      if(request.session.verified)
+      response.render("dashboard2");
+      else
+      response.render("login", { error: null });
+
+  }
+    else {
+      response.render("login", { error: null });
+    }
+  }
   async function getmessage(request,response){
     try {
       console.log(request.query.groupid);
@@ -129,5 +142,6 @@ function getlogin(request, response) {
           groupreq,
           getlogout,
           getmessage,
-          getuser
+          getuser,
+          getdash
         }

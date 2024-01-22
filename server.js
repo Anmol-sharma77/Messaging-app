@@ -96,6 +96,8 @@ app.get("/logout",getroutes.getlogout);
 
 app.get("/getuser",getroutes.getuser);
 
+app.get("/dashboard",getroutes.getdash);
+
 // app.get("/cancelorder",getroutes.cancelorder);
 
 // app.get("/cancelorders",getroutes.cancelorders);
@@ -183,6 +185,8 @@ app.get("/requests",getroutes.getallreq);
 app.get("/request.js",jsroutes.grrequest);
 
 app.get("/homepage.js",jsroutes.gethomepage);
+
+app.get("/dashboard.js",jsroutes.getdash);
 
 app.get("/groupreq",getroutes.groupreq);
 

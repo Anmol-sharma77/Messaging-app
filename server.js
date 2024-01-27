@@ -190,6 +190,8 @@ app.get("/dashboard.js",jsroutes.getdash);
 
 app.get("/groupreq",getroutes.groupreq);
 
+app.get("/gettop",getroutes.gettop);
+
 // app.get("/dispatchedorders",getroutes.dispatchedorders);
 
 // app.get("/cancel",getroutes.cancelpage);

@@ -10,6 +10,17 @@ const queryAsync = (sql) => {
       });
     });
   };
+  async function gettop(request,response){
+    try {
+      const obj1=await queryAsync(`select name from groups order by messcount DESC LIMIT 5`);
+      const obj2=await queryAsync(`select username from users order by messcount DESC LIMIT 5;`)
+      const obj3=await queryAsync(`select region from users  GROUP BY region  order by messcount DESC LIMIT 5`);
+      response.status(200).json({group:obj1,users:obj2,region:obj3});
+    } catch (error) {
+      console.log(error);
+      response.status(400).send();
+    }
+  }
   async function getuser(request,response)
   {
     try {
@@ -143,5 +154,6 @@ function getlogin(request, response) {
           getlogout,
           getmessage,
           getuser,
-          getdash
+          getdash,
+          gettop
         }

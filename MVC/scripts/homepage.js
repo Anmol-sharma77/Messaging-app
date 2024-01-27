@@ -79,7 +79,7 @@ function groupmade(obj, callback) {
 function getgroup(callback) {
     fetch("/groups").then(function (response) {
         if (response.status == 400) {
-            throw new error("something went wrong");
+            throw new Error("something went wrong");
         }
         return response.json();
     }).then(function (data) {
@@ -179,6 +179,7 @@ function addtodom2(data) {
     console.log(data);
     const li = document.createElement('li');
     const i = document.createElement('i');
+    const p=document.createElement('p');
     i.setAttribute("class", "fas fa-user-plus");
     i.style.float = "right";
     li.innerHTML = data.username;
@@ -195,6 +196,12 @@ function addtodom2(data) {
             }
             else {
                 console.log("error");
+                p.style.color="red";
+                p.innerHTML="already added";
+                results.appendChild(p);
+                setTimeout(function(){
+                    results.removeChild(p);
+                },3000)
             }
         })
     });

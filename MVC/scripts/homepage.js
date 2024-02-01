@@ -1,3 +1,4 @@
+const socket=io(); 
 const div1 = document.getElementById("contactList");
 const newgroup = document.getElementById("newgroup");
 const inpdiv = document.getElementById("inpbox");
@@ -100,6 +101,7 @@ function addtodom(item) {
         addicon.style.display = "block";
         groupopen = item.groupid;
         groupcreate.style.display = "none";
+        socket.emit("joingroup",groupopen);
         chat.style.display = "block";
         inpdiv.style.display = "block";
         head.innerHTML = item.name;
@@ -116,6 +118,10 @@ function addtodom(item) {
         })
     });
 }
+function scrollToBottom() {
+    const chatContainer = document.getElementById("chatBody");
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
 function sendMessage() {
     var messageInput = msginp.value;
     if (messageInput.trim() == '') {
@@ -123,21 +129,30 @@ function sendMessage() {
     }
     else{
         const time=Date(Date.now());
-        fetch("/addpost", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ content: messageInput, groupid: groupopen,time:time})
-        }).then(function (res) {
-            if (res.status == 200) {
-                const obj = { content: messageInput, username: username, id:userid,create_time:time};
-                addtochat(obj);
-            }
-            else {
-                console.log("something went wrong");
-            }
-        })
+        const obj = { content: messageInput, username: username, id:userid,create_time:time,gid:groupopen};
+        // fetch("/addpost", {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify({ content: messageInput, groupid: groupopen,time:time})
+        // }).then(function (res) {
+        //     if (res.status == 200) {
+        //         addtochat(obj);
+        //     }
+        //     else {
+        //         console.log("something went wrong");
+        //     }
+        // });
+        socket.emit("msgfromuser",obj);
+        addtochat(obj);
+        scrollToBottom();
+        msginp.value='';
     }
 }
+
+socket.on("send",(data)=>{
+    addtochat(data);
+})
+
 function openAddParticipantModal() {
     document.getElementById('userSearchModal').style.display = 'flex';
 }
@@ -228,4 +243,5 @@ function addtochat(message) {
     chatdiv1.appendChild(p2);
     chatdiv1.appendChild(p);
     chatdiv1.appendChild(p3);
+    scrollToBottom();
 }

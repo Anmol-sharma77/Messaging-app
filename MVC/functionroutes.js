@@ -53,7 +53,7 @@ async function addmessage(data, callback) {
   console.log(Date(Date.now()));
   try {
     id = Math.random();
-    const date = new Date(data.time);
+    const date = new Date(data.create_time);
     const formattedDate = date.toLocaleString('en-US', {
       weekday: 'short',
       year: 'numeric',
@@ -65,9 +65,9 @@ async function addmessage(data, callback) {
       second: '2-digit',
       timeZoneName: 'short',
     });
-    const query=`INSERT INTO messages VALUES (${id}, ${data.userid}, '${formattedDate}', "${data.content}", ${data.groupid})`;
-    const query2=`Update groups set messcount=messcount+1 where groupid=${data.groupid}`;
-    const query3=`Update users set messcount=messcount+1 where id=${data.userid}`;
+    const query=`INSERT INTO messages VALUES (${id}, ${data.id}, '${formattedDate}', "${data.content}", ${data.gid})`;
+    const query2=`Update groups set messcount=messcount+1 where groupid=${data.gid}`;
+    const query3=`Update users set messcount=messcount+1 where id=${data.id}`;
     queryAsync(query);
     queryAsync(query2);
     queryAsync(query3);

@@ -12,9 +12,12 @@ const queryAsync = (sql) => {
   };
   async function gettop(request,response){
     try {
-      const obj1=await queryAsync(`select name from groups order by messcount DESC LIMIT 5`);
-      const obj2=await queryAsync(`select username from users order by messcount DESC LIMIT 5;`)
-      const obj3=await queryAsync(`select region from users  GROUP BY region  order by messcount DESC LIMIT 5`);
+      const start=request.query.start;
+      const end=request.query.end;
+      // console.log(start,end);
+      const obj1=await queryAsync(`select g.name from groups as g,messages as m where m.create_time BETWEEN '${start}' and '${end}' GROUP BY g.name  order by g.messcount DESC LIMIT 5;`);
+      const obj2=await queryAsync(`select u.username from users as u,messages as m WHERE m.create_time BETWEEN '${start}' and '${end}' GROUP BY u.username order by u.messcount DESC LIMIT 5;`)
+      const obj3=await queryAsync(`select u.region from users as u,messages as m WHERE m.create_time BETWEEN '${start}' and '${end}' GROUP BY u.region  order by messcount DESC LIMIT 5;`);
       response.status(200).json({group:obj1,users:obj2,region:obj3});
     } catch (error) {
       console.log(error);

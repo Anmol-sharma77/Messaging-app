@@ -1,6 +1,14 @@
 const express = require("express");
 
+const { createServer } = require('http');
+
+const { Server } = require('socket.io');
+
 const app=express();
+
+const server = createServer(app);
+
+const io = new Server(server);
 
 app.use(express.static("uploads"));
 
@@ -16,15 +24,39 @@ const postroutes=require("./MVC/postroutes");
 
 const multer=require("multer");
 
+io.on('connection', (socket) => {
+  console.log("connection established");
+  socket.on("joingroup",function(gid){
+    socket.join(gid);  
+    console.log("joined");
+  });
+  
+  
+  socket.on("msgfromuser",(msg)=>{
+    addmessage(msg,function(err){
+      if(err)
+      {
+        console.log(error);
+      }
+      else
+      {
+        socket.to(msg.gid).emit("send",msg);
+      }
+    });
+  })
+});
+
 const ejs=require("ejs");
 
 app.set("view engine","ejs");
 
 const session = require("express-session");
+const { addmessage } = require("./MVC/functionroutes");
+const { error } = require("console");
 
 const upload = multer({ dest: 'uploads/' });
 
-  app.listen(8000,function(error)
+  server.listen(8000,function(error)
   {
     if(error)
     console.log(error);

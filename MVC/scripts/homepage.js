@@ -12,6 +12,7 @@ const searchResults = document.getElementById('searchResults');
 const msginp = document.getElementById('messageInput');
 const addicon = document.getElementById("addicon");
 const results = document.getElementById('result');
+const leavegroup=document.getElementById('leave');
 var groupopen = null;
 var username;
 var userid;
@@ -25,6 +26,20 @@ getgroup(function (error, data) {
             addtodom(element);
         });
     }
+});
+leavegroup.addEventListener("click",function(e){
+    fetch("/leavegroup",{
+        method:"POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({gid:groupopen}),
+    }).then(function (response) {
+        if (response.status === 200) {
+            console.log("Remove Child");
+        }
+        else {
+            callback("Something went wrong");
+        }
+    });
 });
 function getuser() {
     fetch("/getuser").then(function (response) {

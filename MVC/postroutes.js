@@ -1,5 +1,6 @@
 const { query } = require("express");
 const functionroutes=require("./functionroutes");
+const session = require("express-session");
 var format = /^(?=.*[-#$.%&@!+=\\*])(?=.*\d)/;
 function postsignup(request,response){
     const data=request.body;
@@ -110,6 +111,19 @@ function postsignup(request,response){
       }
     })
   }
+  function leavegroup(request,response)
+  {
+    functionroutes.leave(request.body.gid,request.session.userid,function(err)
+    {
+      if(err)
+      {
+        response.status(400).send();
+      }
+      else{
+        response.status(200).send();
+      }
+    })
+  }
   function sendreq(request,response)
   {
     var body=request.body;
@@ -133,5 +147,6 @@ function postsignup(request,response){
     searching,
     sendreq,
     acceptreq,
-    addpost
+    addpost,
+    leavegroup
   }

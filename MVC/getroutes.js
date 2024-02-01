@@ -137,7 +137,7 @@ function getlogin(request, response) {
       async function getgroups(request,response)
       {
         try {
-          let data2=await queryAsync(`SELECT g.groupid,g.name,g.createdby FROM participant p JOIN groups g ON p.groupid = g.groupid WHERE p.participantid =${request.session.userid};`);
+          let data2=await queryAsync(`SELECT g.groupid,g.name,g.createdby FROM participant as p JOIN groups g ON p.groupid = g.groupid WHERE p.participantid =${request.session.userid} and p.active=1;`);
           response.status(200);
           response.json(data2);
         } catch (error) {

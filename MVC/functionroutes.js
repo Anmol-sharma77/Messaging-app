@@ -8,7 +8,7 @@ con.connect(function (error) {
 async function accept(data, callback) {
   try {
     queryAsync(`update requests set status="accept" where reqid=${data.reqid}`);
-    queryAsync(`insert into participant values(${data.userid},${data.groupid},'${Date(Date.now())}')`);
+    queryAsync(`insert into participant values(${data.userid},${data.groupid},'${Date(Date.now())}',1)`);
     callback();
     return;
   } catch (error) {
@@ -32,7 +32,7 @@ async function checklogin(log, callback) {
 async function creategroup(data, callback) {
   try {
     queryAsync(`insert into groups values(${data.groupid},'${Date(Date.now())}',"${data.name}",${data.userid},0)`);
-    queryAsync(`insert into participant values(${data.userid},${data.groupid},'${Date(Date.now())}')`);
+    queryAsync(`insert into participant values(${data.userid},${data.groupid},'${Date(Date.now())}',1)`);
     callback();
   } catch (error) {
     console.log(error);
@@ -105,6 +105,17 @@ async function saveuser(user, callback) {
     });
   }
 }
+function leave(gid,userid,callback)
+{
+  try {
+    queryAsync(`delete from participant where groupid=${gid} and participantid=${userid}`);
+    queryAsync(`delete from requests where groupid=${gid} and reqto=${userid}`);
+    callback();
+  } catch (error) {
+    console.log(error);
+    callback(error);
+  }
+}
 async function addreq(data, callback) {
   try {
     id = Math.random();
@@ -143,5 +154,6 @@ module.exports={
   search,
   addreq,
   accept,
-  addmessage
+  addmessage,
+  leave
 }

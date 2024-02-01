@@ -258,6 +258,8 @@ app.post("/acceptreq",postroutes.acceptreq);
 
 // app.post("/approveproduct",postroutes.approveproduct);
 
+app.post("/leavegroup",postroutes.leavegroup);
+
 app.post("/login",postroutes.postlogin);
 
 app.post("/signup",postroutes.postsignup);

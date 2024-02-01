@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-mQ2eYSoK7NlfWGOu9Y5OV8B6zjIm8meWJjGSAiSqu1zV6UD9jwvQDO6Utzl5NPPr" crossorigin="anonymous">
     <title>Chat App</title>
     <style>
         body {
@@ -104,7 +105,13 @@ h1 {
     /* overflow: scroll; */
     height: 300px;
 }
-
+.leave-group-icon {
+      font-size:30px;
+      color: #ff6347; /* Coral color */
+      cursor: pointer;
+      float:inline-end;
+    margin-left: 20px;
+    }
 .chat-header {
     background-color: #128C7E;
     color: #fff;
@@ -114,18 +121,17 @@ h1 {
     font-weight: bold;
     border-bottom: 1px solid #fff;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
 }
-
+.gname{
+    width:max-content;
+}
 .add-participant-icon {
     cursor: pointer;
     display: flex;
     align-items: center;
-}
-
-#addicon {
-    margin-left: 10px;
+    margin-left: 900px;
 }
 
 .chat-body {
@@ -166,6 +172,9 @@ h1 {
 .time {
     float: right;
     margin-left: 2px;
+    font-size: 10px;
+    margin-top: 15px;
+    padding-bottom: 0%;
 }
 
 .message-content {
@@ -249,10 +258,11 @@ h1 {
             </div>
             <div class="chat-container" id="chat">
                 <div class="chat-header" id="chatHeade">
-                    <span id="chatHeader">Select a Chat</span>
+                    <span class="gname" id="chatHeader">Select a Chat</span>
                     <span class="add-participant-icon" onclick="openAddParticipantModal()">
-                        <i id="addicon" style="display: none;" class="fas fa-user-plus"></i>
+                        <i id="addicon" style="display: none;" class="fas fa-user-plus" title="Add Participant"></i>
                     </span>
+                    <i id="leave" class="fas fa-sign-out-alt leave-group-icon" title="Leave Group"></i>
                 </div>
                 <div class="chat-body" id="chatBody">Please select a chat from the left.</div>
                 <div class="input-container" style="display: none;" id="inpbox">

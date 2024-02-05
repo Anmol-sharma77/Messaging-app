@@ -1,4 +1,5 @@
 const con=require("../database");
+const moment=require('moment');
 const queryAsync = (sql) => {
     return new Promise((resolve, reject) => {
       con.query(sql ,(err, results) => {
@@ -14,10 +15,13 @@ const queryAsync = (sql) => {
     try {
       const start=request.query.start;
       const end=request.query.end;
+      const outputFormat = 'YYYY-MM-DD HH:mm:ss';
+      const startDate = moment(start, 'ddd MMM DD YYYY HH:mm:ss [GMT] Z (zz)').format(outputFormat);
+      const endDate = moment(end, 'ddd MMM DD YYYY HH:mm:ss [GMT] Z (zz)').format(outputFormat);
       // console.log(start,end);
-      const obj1=await queryAsync(`select g.name from groups as g,messages as m where m.create_time BETWEEN '${start}' and '${end}' GROUP BY g.name  order by g.messcount DESC LIMIT 5;`);
-      const obj2=await queryAsync(`select u.username from users as u,messages as m WHERE m.create_time BETWEEN '${start}' and '${end}' GROUP BY u.username order by u.messcount DESC LIMIT 5;`)
-      const obj3=await queryAsync(`select u.region from users as u,messages as m WHERE m.create_time BETWEEN '${start}' and '${end}' GROUP BY u.region  order by messcount DESC LIMIT 5;`);
+      const obj1=await queryAsync(`SELECT g.name, COUNT(m.messageid) AS message_count FROM groups g JOIN messages m ON g.groupid = m.groupid WHERE STR_TO_DATE(m.create_time, '%a, %b %e, %Y, %H:%i:%s GMT%r') BETWEEN '${startDate}' AND '${endDate}' GROUP BY g.groupid, g.name ORDER BY message_count DESC LIMIT 5;`);
+      const obj2=await queryAsync(`select u.username from users as u,messages as m WHERE STR_TO_DATE(m.create_time, '%a, %b %e, %Y, %H:%i:%s GMT%r') BETWEEN '${startDate}' and '${endDate}' GROUP BY u.username order by u.messcount DESC LIMIT 5;`)
+      const obj3=await queryAsync(`select u.region from users as u,messages as m WHERE STR_TO_DATE(m.create_time, '%a, %b %e, %Y, %H:%i:%s GMT%r') BETWEEN '${startDate}' and '${endDate}' GROUP BY u.region  order by messcount DESC LIMIT 5;`);
       response.status(200).json({group:obj1,users:obj2,region:obj3});
     } catch (error) {
       console.log(error);
@@ -52,7 +56,10 @@ const queryAsync = (sql) => {
   async function getmessage(request,response){
     try {
       console.log(request.query.groupid);
-      const data=await queryAsync(`select u.id,u.username,m.content,m.create_time from messages as m,users as u where m.sender=u.id and groupid=${request.query.groupid}`);
+      let joind=await queryAsync(`select joindate from participant where groupid=${request.query.groupid} and participantid=${request.session.userid};`);
+      joind=joind[0];
+      const data=await queryAsync(`select u.id,u.username,m.content,m.create_time from messages as m,users as u where m.sender=u.id and groupid=${request.query.groupid} and m.create_time between '${joind.joindate}' and SYSDATE();`);
+      // console.log(data);
       response.status(200).json(data);
     } catch (error) {
       console.log(error);

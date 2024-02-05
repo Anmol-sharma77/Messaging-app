@@ -67,7 +67,7 @@ function postsignup(request,response){
     functionroutes.checklogin(log,function(error,user){
       if(error)
       {
-        response.status(200);
+        response.status(400);
         response.render("login",{error:"Invalid credentials"});
         response.send();
       }

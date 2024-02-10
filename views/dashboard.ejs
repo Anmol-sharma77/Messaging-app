@@ -110,7 +110,7 @@ h1 {
       color: #ff6347; /* Coral color */
       cursor: pointer;
       float:inline-end;
-    margin-left: 20px;
+      /* margin-left: 20px; */
     }
 .chat-header {
     background-color: #128C7E;
@@ -121,7 +121,8 @@ h1 {
     font-weight: bold;
     border-bottom: 1px solid #fff;
     display: flex;
-    /* justify-content: space-between; */
+    flex-wrap: wrap;
+    justify-content: space-between;
     align-items: center;
 }
 .gname{
@@ -130,13 +131,13 @@ h1 {
 .add-participant-icon {
     cursor: pointer;
     display: flex;
-    align-items: center;
-    margin-left: 900px;
+    /* align-items: center; */
+    /* margin-left: 900px; */
 }
 
 .chat-body {
     padding: 15px;
-    flex-grow: 1;
+    /* flex-grow: 1; */
     overflow-y: scroll;
     display: flex;
     height: 100%;
@@ -258,10 +259,10 @@ h1 {
             </div>
             <div class="chat-container" id="chat">
                 <div class="chat-header" id="chatHeade">
-                    <span class="gname" id="chatHeader">Select a Chat</span>
                     <span class="add-participant-icon" onclick="openAddParticipantModal()">
                         <i id="addicon" style="display: none;" class="fas fa-user-plus" title="Add Participant"></i>
                     </span>
+                    <span class="gname" id="chatHeader">Select a Chat</span>
                     <i id="leave" class="fas fa-sign-out-alt leave-group-icon" title="Leave Group"></i>
                 </div>
                 <div class="chat-body" id="chatBody">Please select a chat from the left.</div>
